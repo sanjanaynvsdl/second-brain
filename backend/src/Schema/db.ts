@@ -70,6 +70,7 @@ const sharbleLink = new Schema({
     type: ObjectId,
     ref: "User",
     required: true,
+    unique:true
   },
 });
 

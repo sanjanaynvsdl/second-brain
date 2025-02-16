@@ -1,1 +1,1 @@
-{"root":["./src/index.ts","./src/middleware.ts","./src/routes/contentroutes.ts","./src/routes/shareroute.ts","./src/routes/userroutes.ts","./src/schema/db.ts"],"version":"5.7.3"}
+{"root":["./src/index.ts","./src/middleware.ts","./src/utils.ts","./src/routes/contentroutes.ts","./src/routes/shareroute.ts","./src/routes/userroutes.ts","./src/schema/db.ts"],"version":"5.7.3"}
