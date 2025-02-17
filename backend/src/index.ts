@@ -5,11 +5,27 @@ import express from "express";
 import mongoose from "mongoose";
 import userRoute from './Routes/userRoutes';
 import contentRoutes from "./Routes/contentRoutes";
-import shareRoutes from "./Routes/shareRoute"
+import shareRoutes from "./Routes/shareRoute";
+import cors from 'cors';
 
 const app = express();
 app.use(express.json());
 
+const allowedOrigins = ["http://localhost:5173"];
+
+const corsOptions: cors.CorsOptions = {
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"], 
+};
+
+app.use(cors());
 
 app.get("/", (req,res)=> {
     res.send("heyy, Lessgoo")

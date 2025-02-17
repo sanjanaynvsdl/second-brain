@@ -1,6 +1,32 @@
+import { useState } from 'react';
 import {Link} from 'react-router-dom';
+// import axiosInstance from '../api/axiosInstance';
+import axios from 'axios';
+
 
 const SignUP = () => {
+
+  const [username, setUsername]=useState("");
+  const [password, setPassword]=useState("");
+  const [isLoading, setIsloading]=useState(false);
+
+
+  async function handleSignup() {
+    try {
+      setIsloading(true);
+      const response = await axios.post("http://localhost:3000/api/v1/auth/signup", {
+        username:username,
+        password:password
+      });
+
+      console.log(response.data);
+      setIsloading(false);
+      
+    } catch (error) {
+      
+    }
+  }
+
   return (
     <div className="flex justify-center inset-0 items-center h-screen bg-gradient-to-tl from-[#abb0f6] to-[#39306e]">
       <div className='flex flex-col text-center mt-[-100px]'>
@@ -14,15 +40,18 @@ const SignUP = () => {
           <input
             type="text"
             placeholder="username"
+            onChange={(e)=> setUsername(e.target.value)}
             className="px-2 py-1 outline-0 rounded-lg bg-[#cbcffa]"
           />
           <input
             type="password"
             placeholder="password"
+            onChange={(e)=> setPassword(e.target.value)}
             className="px-2 py-1 outline-0 rounded-lg bg-[#cbcffa]"
           />
           <button 
-            className="px-18 bg-[#796ee6] py-1 text-white rounded-lg font-bold  ">
+          onClick={handleSignup}
+            className="px-18 bg-[#796ee6] py-1 text-white rounded-lg font-bold cursor-pointer transition-transform duration-300  ">
             Submit
           </button>
           <p>Already have an account? <Link to="/signin" className='text-[#48399a]'>Sing In</Link></p>
