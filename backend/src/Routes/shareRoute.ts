@@ -13,7 +13,6 @@ route.post("/", userMiddleware, async (req: Request, res: Response) => {
     const share = req.body.share;
 
     if (share) {
-
       const existingUser = await SharableLink.findOne({
         userId: req.userId,
       });
@@ -33,7 +32,7 @@ route.post("/", userMiddleware, async (req: Request, res: Response) => {
       });
       res.status(200).json({
         message: "Successfully created hash and stored!",
-        hash:hash,
+        hash: hash,
       });
       return;
     }

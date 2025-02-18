@@ -42,16 +42,14 @@ const SignIn = () => {
     <div className="flex justify-center inset-0 items-center h-screen bg-gradient-to-tl from-[#abb0f6] to-[#3f347b]">
       <div className="flex flex-col text-center mt-[-100px]">
         <p className="text-white text-3xl font-bold mb-4">
-          Welcome to <span className="text-[#251f47]">second Brain</span>
+        Welcome Back to <span className="text-[#251f47]">Second Brain👀</span>
         </p>
         <p className="text-white mb-6 text-lg">
-          No more lost links.
+        Get back to your saved content effortlessly.
           <br />
-          Your personal hub for storing
-          <br />
-          YouTube videos and tweets—effortlessly!
+          Sign in to access your YouTube videos and tweets in one place!
         </p>
-        <div className="bg-white rounded-xl p-8 flex flex-col">
+        <div className="bg-white rounded-xl p-8  inline-block mx-auto">
           <div className="flex flex-col gap-4 items-center">
             <p className="text-2xl font-bold">Sign In</p>
             <input

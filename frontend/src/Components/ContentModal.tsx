@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import axios from "axios";
+import axiosInstance from "../api/axiosInstance";
 
 interface propsTypes {
   isOPen: boolean;
   onClose: () => void;
+  refetch: () => any;
 }
 
 const ContentModal = (props: propsTypes) => {
@@ -15,15 +16,54 @@ const ContentModal = (props: propsTypes) => {
   //props, isOpen, setIsOPen/ onClose
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
-  const [type, setType] = useState("");
-  //   const typeRef = useRef("") {can also use ref as I'm not using the type anywhere}
+  const [type, setType] = useState("other");
+  const [isError, setIsError] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
 
-  // async function addContent() {
-  //     try {
-  //         const response = await axios.post()
-  //     } catch (error) {
-  //     }
-  // }
+  // const titleRef = useRef<HTMLInputElement>("");
+  // const linkRef = useRef<HTMLInputElement>("");
+  // const typeRef = useRef("") {can also use ref}
+
+  async function addContent() {
+    try {
+      if (link.trim() === "" || title.trim() === "") {
+        setIsError(true);
+        setErrMsg("Please provide valid title, url");
+        return;
+      }
+      await axiosInstance.post(
+        "/content/",
+        {
+          title: title,
+          link: link,
+          type: type,
+        },
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
+      );
+      props.refetch();
+      props.onClose();
+      // console.log(response);
+
+      setTimeout(() => {
+        setIsError(false);
+        setErrMsg("");
+      }, 3000);
+    } catch (error: any) {
+      console.log(error);
+      setIsError(true);
+      setErrMsg(
+        error.response?.data?.message || "An unexpexted error occured!"
+      );
+      setTimeout(() => {
+        setIsError(false);
+        setErrMsg("");
+      }, 3000);
+    }
+  }
 
   return (
     <div>
@@ -58,27 +98,50 @@ const ContentModal = (props: propsTypes) => {
             <div className="flex gap-2 mt-2">
               <button
                 onClick={() => setType("twitter")}
-                className=" text-sm bg-[#e2e5fd] text-md cursor-pointer rounded-md px-3 py-1 transition-transform duration-300 hover:scale-105  hover:border-1 hover:border-[#796ee6] "
+                className={`text-sm  cursor-pointer rounded-md px-3 py-1 transition-transform duration-300 hover:scale-105  hover:border-1 hover:border-[#796ee6] 
+                  ${
+                    type === "twitter"
+                      ? "bg-[#796ee6]  text-white"
+                      : "bg-[#e2e5fd] text-black"
+                  }`}
               >
                 Tweet
               </button>
               <button
                 onClick={() => setType("youtube")}
-                className=" text-sm bg-[#e2e5fd] text-md cursor-pointer rounded-md px-3 py-1 transition-transform duration-300 hover:scale-105  hover:border-1 hover:border-[#796ee6] "
+                className={` text-sm text-md cursor-pointer rounded-md px-3 py-1 transition-transform duration-300 hover:scale-105  hover:border-1 hover:border-[#796ee6] ${
+                  type === "youtube"
+                    ? "bg-[#796ee6]  text-white"
+                    : "bg-[#e2e5fd] text-black"
+                }`}
               >
                 Youtube
               </button>
               <button
                 onClick={() => setType("other")}
-                className=" text-sm bg-[#e2e5fd] text-md cursor-pointer rounded-md px-3 py-1 transition-transform duration-300 hover:scale-105  hover:border-1 hover:border-[#796ee6] "
+                className={`text-sm text-md cursor-pointer rounded-md px-3 py-1 transition-transform duration-300 hover:scale-105  hover:border-1 hover:border-[#796ee6] 
+                  ${
+                    type === "other"
+                      ? "bg-[#796ee6]  text-white"
+                      : "bg-[#e2e5fd] text-black"
+                  }`}
               >
                 Other
               </button>
             </div>
 
-            <button className=" mt-2 text-white  font-bold flex-1 bg-[#5b43d6] cursor-pointer rounded-lg px-3 py-2 transition-transform duration-300 hover:scale-105  hover:border-1 hover:border-[#796ee6] ">
+            <button
+              onClick={addContent}
+              className=" mt-2 text-white  font-bold flex-1 bg-[#5b43d6] cursor-pointer rounded-lg px-3 py-2 transition-transform duration-300 hover:scale-105  hover:border-1 hover:border-[#796ee6] "
+            >
               Submit
             </button>
+
+            {isError && (
+              <div className="text-md text-red-400 m-3 text-center ">
+                {errMsg}
+              </div>
+            )}
           </div>
         </div>
       )}

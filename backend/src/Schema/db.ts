@@ -21,7 +21,7 @@ const userSchema = new Schema(
   }
 );
 
-const contentTypes = ["image", "video", "article", "audio"];
+const contentTypes = ["image", "video", "twitter", "youtube", "other"];
 
 const contentSchema = new Schema(
   {

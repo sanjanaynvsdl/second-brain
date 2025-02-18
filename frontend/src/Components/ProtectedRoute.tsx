@@ -2,9 +2,10 @@ import { Navigate } from "react-router-dom";
 
 const ProtectedRoute=({children}:any)=>{
     const token = localStorage.getItem('token');
+    // console.log(token);
 
     if(!token) {
-        <Navigate to="/signin" replace/>
+        return <Navigate to="/signin" replace/>
         //navigate("signup");
     }
 

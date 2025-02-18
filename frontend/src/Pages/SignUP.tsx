@@ -50,11 +50,11 @@ const SignUP = () => {
   return (
     <div className="flex justify-center inset-0 items-center h-screen bg-gradient-to-tl from-[#abb0f6] to-[#39306e]">
       <div className='flex flex-col text-center mt-[-100px]'>
-        <p className='text-white text-3xl font-bold mb-4'>Welcome to <span className='text-[#251f47]'>second Brain</span></p>
+        <p className='text-white text-3xl font-bold mb-4'>Welcome to <span className='text-[#251f47]'>Second Brain</span></p>
         <p className='text-white text-lg mb-6'>No more lost links. 
         <br/>Your personal hub for storing 
-        <br/>YouTube videos and tweets—effortlessly!</p>
-      <div className="bg-[white] rounded-xl p-8 flex flex-col">
+        <br/>YouTube videos and tweets—effortlessly!</p> 
+      <div className="bg-[white] rounded-xl p-8 inline-block mx-auto">
         <div className="flex flex-col gap-4 items-center">
             <p className='text-2xl font-bold'>Sign UP</p>
           <input
