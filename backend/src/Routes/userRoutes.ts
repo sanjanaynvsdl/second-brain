@@ -24,9 +24,39 @@ userRoute.post("/signup", async (req: Request, res: Response) => {
     const { success, data, error } = await userSchema.safeParse(req.body);
     const { username, password }: UserType = req.body; //this is infered from the 'zod schema above'
 
+    console.log("The error is : "+ error);
     if (!success) {
+      //error is a object with an array, so we iterate over-it and get the message
+      //it can be accessed by error.errors or error.issues
+      //Array of errors we map each object and extract message from it!
+      /* {
+        "code": "too_small",
+        "minimum": 6,
+        "type": "string",
+        "inclusive": true,
+        "exact": false,
+        "message": "Password should be minimum 6-letters",
+        "path": ["password"]
+      }, 
+
+      {
+        //error-2 ka object 
+        as this is array of error
+      }
+
+      */
+      // console.log(error.errors.map(err => err.message).join(", "));
+      // console.log(error.issues.map(err => err.message)); - used join to join multiple string of messages into one line with  comma space", "
+      console.log(`The error using errors, with join : ${error.issues.map(err => err.message).join(", ")}`);
+      console.log(`The error using issues, with join : ${error.issues.map(err => err.message).join(", ")}`);
+      console.log(`The error using issues, without join : ${error.issues.map(err => err.message)}`);
+
+
+
+
       res.status(403).json({
-        error: error.message,
+        message:error.issues.map(err => err.message).join(", "),
+        
       });
       return;
     }
@@ -45,7 +75,7 @@ userRoute.post("/signup", async (req: Request, res: Response) => {
 
     const hashedPass = await bcrypt.hash(password, 10);
 
-    console.log("The hashed pass is :" + hashedPass);
+    // console.log("The hashed pass is :" + hashedPass);
 
     await User.create({
       username: username,

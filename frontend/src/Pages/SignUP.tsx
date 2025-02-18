@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import {Link} from 'react-router-dom';
-// import axiosInstance from '../api/axiosInstance';
-import axios from 'axios';
+import {Link, useNavigate} from 'react-router-dom';
+import axiosInstance from '../api/axiosInstance';
+// import axios from 'axios';
 
 
 const SignUP = () => {
@@ -9,21 +9,41 @@ const SignUP = () => {
   const [username, setUsername]=useState("");
   const [password, setPassword]=useState("");
   const [isLoading, setIsloading]=useState(false);
+  const [isError, setIsError]=useState(false);
+  const [errorMessage, setErrorMsg]=useState("");
+  const navigate = useNavigate();
 
 
   async function handleSignup() {
     try {
       setIsloading(true);
-      const response = await axios.post("http://localhost:3000/api/v1/auth/signup", {
+      setIsError(false);
+      const response = await axiosInstance.post('/auth/signup', {
         username:username,
         password:password
       });
 
       console.log(response.data);
       setIsloading(false);
+      navigate("/signin");
       
-    } catch (error) {
+    } catch (error:any) {
+      setIsloading(false);
+      setIsError(true);
+      setErrorMsg(error.response?.data?.message || "An unexpexted error occured!");
       
+      setTimeout(()=> {
+        setIsError(false);
+        setErrorMsg("");
+      },4000);
+
+      // if (axiosInstance.isAxiosError(error)) {
+      //   setErrorMsg((error as any).response?.data?.message);
+      // } else {
+      //   setErrorMsg("An unexpected error occurred");
+      // }
+      // isAxiosError checks if the error object has Axios-specific prop'
+      // error.response - error.request - error.config
     }
   }
 
@@ -49,11 +69,14 @@ const SignUP = () => {
             onChange={(e)=> setPassword(e.target.value)}
             className="px-2 py-1 outline-0 rounded-lg bg-[#cbcffa]"
           />
+          
           <button 
           onClick={handleSignup}
             className="px-18 bg-[#796ee6] py-1 text-white rounded-lg font-bold cursor-pointer transition-transform duration-300  ">
-            Submit
+            {isLoading ? 'Loading':"Submit"}
           </button>
+
+          {isError && <div className='text-red-500 text-sm mt-2 '>{errorMessage}</div> }
           <p>Already have an account? <Link to="/signin" className='text-[#48399a]'>Sing In</Link></p>
         </div>
       </div>

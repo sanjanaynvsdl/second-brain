@@ -24,7 +24,9 @@ route.post("/", userMiddleware,  async(req:Request,res:Response)=> {
         const {success, data, error}= await contentSchema.safeParse(req.body);
 
         if(!success) {
-            res.status(411).json({error:error});
+            res.status(411).json({
+                message:error.errors.map((err)=> err.message).join(", ")
+            });
             return;
         }
 

@@ -3,12 +3,13 @@ import DashBoard from "./Pages/DashBoard"
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import SignUP from "./Pages/SignUP";
 import SignIn from "./Pages/SignIn";
+import ProtectedRoute from "./Components/ProtectedRoute"
 
 function App() {
   return(
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<DashBoard/>}/>
+        <Route path="/" element={<ProtectedRoute><DashBoard/></ProtectedRoute>}/>
         <Route path="/signup" element={<SignUP/>}/>
         <Route path="/signin" element={<SignIn/>}/>
       </Routes>
@@ -19,10 +20,7 @@ function App() {
 export default App;
 
 //todo: 
-//1. Connect signin, signup pages to backend --unable to connect from instance, and couldn't load from env.
-//2. Set local storage
-//3. Use Protected routes
-//4. Proper navigation
+
 //5. Render the components dynamically
 //6. Log out button
 //7. Implement, Other features on the side-Bar
@@ -32,3 +30,7 @@ export default App;
 //11. set the env in FE.
 //12. Deploy FE
 //---DONE---- by 18EOD
+
+
+//----Need to be fixed------
+//  (couldn't load from env.)
