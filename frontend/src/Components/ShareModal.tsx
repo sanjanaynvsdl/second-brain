@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LuClipboardCheck } from "react-icons/lu";
 import axiosInstance from "../api/axiosInstance";
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -12,17 +12,26 @@ const ShareModal = (props: shareModal) => {
   if (!props.shareOpen) {
     return;
   }
+
+  const [shareableLink, setShareableLink] = useState('');
   const [copied, setCopied] = useState(false);
   const [hash, setHash] = useState("");
   const [isErr, setIsError] = useState(false);
   const [errMsg, setErrMsg] = useState("");
 
-  //todo: get this from config file, 
-  const link = `http://localhost:5173/share/`;
+  const baseUrl = import.meta.env.VITE_FRONTEND_URL;
+  // const link = import.meta.env.VITE_API_URL;
+
+  useEffect(()=>{
+
+    if(hash) {
+      setShareableLink(`${baseUrl}/share/${hash}`);
+    }
+  },[hash,baseUrl]);
 
   async function handleCopy() {
     try {
-      await navigator.clipboard.writeText(`${link}${hash}`);
+      await navigator.clipboard.writeText(shareableLink);
       setIsError(false);
       setCopied(true);
 
@@ -89,7 +98,7 @@ const ShareModal = (props: shareModal) => {
 
           <div className=" bg-[#e2e5fd] flex w-64 break-words">
             <p className="text-md p-2 flex-1 overflow-hidden break-words">
-              http://localhost:5173/share/{hash}
+             {shareableLink}
             </p>
             <button
               onClick={handleCopy}
