@@ -61,7 +61,7 @@ route.get("/", userMiddleware, async(req:Request, res:Response)=> {
 
         const contents = await Content.find({
             userId:req.userId
-        }).populate("userId", 'username password');
+        });
         
 
     
@@ -96,7 +96,7 @@ route.delete("/:id", userMiddleware, async(req:Request,res: Response)=> {
             return;
         }
 
-        console.log(`The id's are : ${item.userId} and req is from ${req.userId}`);
+        // console.log(`The id's are : ${item.userId} and req is from ${req.userId}`);
         
        if(!(new mongoose.Types.ObjectId(req.userId as string).equals(item.userId))) {
         res.status(403).json({message:"Not authorized to delete the content!"});
