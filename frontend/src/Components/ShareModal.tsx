@@ -73,7 +73,7 @@ const ShareModal = (props: shareModal) => {
     }
   }
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-brightness-75">
+    <div className="fixed inset-0 flex items-center justify-center  backdrop-blur-sm z-50">
       <div className="inline-block bg-white p-8 rounded-xl mt-[-100px]">
         <div className="flex flex-col justify-center gap-4">
           <div className="flex">

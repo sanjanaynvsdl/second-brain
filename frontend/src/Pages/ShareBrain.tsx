@@ -38,13 +38,18 @@ const ShareBrain = () => {
         error.response?.data?.message ||
           "An error occured while fetching user contents!"
       );
+
+      setTimeout(()=>{
+        setIsErr(false);
+        setErrMsg("");
+      },2000)
     //   console.log(`Error occured while fetching the user contents`);
     }
   }
 
   return (
     <div className="flex flex-col items-center bg-[#e2e5fd] w-full min-h-screen gap-2">
-      <p className="text-2xl text-center m-2">{username} contents</p>
+      <p className="text-2xl text-center m-2 font-bold">{username} contents</p>
 
       {isLoading && (
         <div>

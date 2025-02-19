@@ -38,7 +38,7 @@ const TwitterPage = () => {
           </p>
         </div>
       )}
-      <div className="gap-1 sm:mt-4 sm:m-20   grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4">
+      <div className="gap-1 sm:mt-4 sm:m-10  grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4">
         {filteredContent &&
           filteredContent.map((content, index) => (
             <Card

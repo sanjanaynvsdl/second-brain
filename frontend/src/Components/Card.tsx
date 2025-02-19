@@ -4,6 +4,7 @@ import { IoShareSocialOutline } from "react-icons/io5";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import axiosInstance from "../api/axiosInstance";
 import { useState } from "react";
+import {Tweet} from 'react-tweet';
 
 {
   /* <AiOutlineYoutube /> */
@@ -17,10 +18,28 @@ interface cardProps {
   reFetch: () => any;
 }
 
+
+
 const Card = (props: cardProps) => {
   // const [onSuccess, setOnSuccessMsg] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [isError, setIsError] = useState(false);
+
+  //Split this link to extract id,
+  //1.  "https://x.com/Sanjana_ynvsdl/status/1888932240308019419?ref_src=twsrc%5Etfw"
+  //2.  [  'https://x.com/Sanjana_ynvsdl/', '1888932240308019419?ref_src=twsrc%5Etfw' ] --split-1 split 2nd part 
+  //3.  [ '1888932240308019419', 'ref_src=twsrc%5Etfw' ]
+  const getTweetId = () => {
+    if (!props.link) return undefined; 
+  
+    const split1 = props.link.split("/status/");
+  
+    if (split1 && split1.length > 1) {  // Add length check to avoid undefined[1]
+      const finalId = split1[1].split("?");
+      return finalId[0];
+    }
+    return undefined;  // This fallback ID will help prevent errors
+  }
 
   async function deleteContent() {
     console.log("Function called!");
@@ -41,6 +60,11 @@ const Card = (props: cardProps) => {
           "An Error occurred while deleting content!"
       );
       console.log(`Error while deleting the content ${error}`);
+
+      setTimeout(()=>{
+        setIsError(false);
+        setErrMsg("");
+      },2000)
     }
   }
 
@@ -51,15 +75,17 @@ const Card = (props: cardProps) => {
           <p>{errMsg}</p>
         </div>
       )}
-      <div className="max-w-72 border-1 border-[#e3e3e3]  rounded-lg p-4 bg-white mt-4">
-        <div className="flex justify-between items-center gap-2">
-          <div className="flex items-center gap-2 ">
+      <div className="max-w-78 border-1 border-[#e3e3e3]  rounded-lg p-4 bg-white mt-4">
+        <div className="flex justify-between gap-2">
+          <div className="flex gap-2">
             {props.type == "youtube" && <AiOutlineYoutube size={24} />}
             {props.type == "twitter" && <FaXTwitter size={18} />}
-            <p className="text-xl font-bold px-2">{props.title}</p>
+            <div className="flex w-40 break-words">
+            <p className="text-xl font-bold px-2 overflow-hidden break-words mt-[-3px] ">{props.title}</p>
+            </div>
           </div>
 
-          <div className="flex justify-center items-center gap-2">
+          <div className="flex  gap-2">
             <a href={props.link.replace("embed", "watch")} target="_blank">
               <IoShareSocialOutline size={18} />
             </a>
@@ -85,20 +111,12 @@ const Card = (props: cardProps) => {
 
         {
           props.type == "twitter" && (
-            <div className="">
-              <blockquote className="twitter-tweet">
-                <a href={props.link.replace("x.com", "twitter.com")}></a>
-              </blockquote>{" "}
-              <script
-                async
-                src="https://platform.twitter.com/widgets.js"
-                charSet="utf-8"
-              ></script>
+            <div className="light">
+              <Tweet id={getTweetId()}
+               {...({} as any)}
+              />
             </div>
           )
-          // <blockquote>
-          //     <a href={props.link}></a>
-          // </blockquote>
         }
         <br></br>
       </div>
