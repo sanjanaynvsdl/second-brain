@@ -67,10 +67,9 @@ function App() {
 
 export default App;
 
-//todo: fix tweet embedding 
-//10. set env vercel config, deploy BE,
-//11. set the config file with backend and frontend url in FE.
-//12. Deploy FE
+
+
+
 //---DONE---- by 18EOD --hah couldn't -> tomo'
 
 
