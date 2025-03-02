@@ -33,16 +33,9 @@ const allowedCors:cors.CorsOptions ={
     credentials:true,
     methods:["GET","POST","PUT","DELETE"],
     allowedHeaders:["Content-type", "Authorization", "token"]
-
-
-
-
-        
-
-
 }
 
-app.use(cors());
+app.use(cors(allowedCors));
 
 app.get("/", (req,res)=> {
     res.send("Lessgoo working!")

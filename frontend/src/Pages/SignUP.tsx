@@ -49,8 +49,8 @@ const SignUP = () => {
 
   return (
     <div className="flex justify-center inset-0 items-center h-screen bg-gradient-to-tl from-[#abb0f6] to-[#39306e]">
-      <div className='flex flex-col text-center mt-[-100px]'>
-        <p className='text-white text-3xl font-bold mb-4'>Welcome to <span className='text-[#251f47]'>Second Brain</span></p>
+      <div className='flex flex-col text-center mt-[-100px] mx-10'>
+        <p className='text-white sm:text-5xl  text-3xl font-bold mb-4'>Welcome to <span className='text-[#251f47]'>Second Brain</span></p>
         <p className='text-white text-lg mb-6'>No more lost links. 
         <br/>Your personal hub for storing 
         <br/>YouTube videos and tweets—effortlessly!</p> 

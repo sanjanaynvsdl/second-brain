@@ -40,8 +40,8 @@ const SignIn = () => {
 
   return (
     <div className="flex justify-center inset-0 items-center h-screen bg-gradient-to-tl from-[#abb0f6] to-[#3f347b]">
-      <div className="flex flex-col text-center mt-[-100px]">
-        <p className="text-white text-3xl font-bold mb-4">
+      <div className="flex flex-col text-center mt-[-100px] mx-10">
+        <p className="text-white sm:text-5xl text-3xl font-bold mb-4">
         Welcome Back to <span className="text-[#251f47]">Second Brain👀</span>
         </p>
         <p className="text-white mb-6 text-lg">

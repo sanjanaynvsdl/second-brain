@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Card from "../Components/Card";
 import useContents from "../hooks/useContents";
+import EmptyState from "../Components/EmptyState";
 
 const TwitterPage = () => {
   interface contenTypes {
@@ -10,7 +11,7 @@ const TwitterPage = () => {
     _id: string;
   }
 
-  const { contents, isLoading, isError, errMsg, getContents } = useContents();
+  const { contents, isLoading, isError, errMsg,  getContents } = useContents();
 
   const [filteredContent, setFilteredContent] = useState<contenTypes[]>([]);
 
@@ -25,7 +26,7 @@ const TwitterPage = () => {
 
   return (
     <div className="  sm:ml-64 ml-2 bg-[#eff1fe] min-h-screen w-full">
-      <p className="text-2xl m-4 text-center">X marks the spot! All your saved tweets,</p>
+      <p className="text-2xl m-4 text-center my-4 font-medium">X marks the spot! All your saved tweets,</p>
       {isError && (
         <div className="text-center">
           <p className="text-md text-red-400">{errMsg}</p>
@@ -38,8 +39,12 @@ const TwitterPage = () => {
           </p>
         </div>
       )}
+      {filteredContent.length==0 ? <div className="my-8">
+        <EmptyState subHeading=" No Tweets Yet!" message=" Start adding from the Home page —your saved tweets will show up here!"/>
+      </div> :
+      
       <div className="gap-1 sm:mt-4 sm:m-10  grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4">
-        {filteredContent &&
+        {
           filteredContent.map((content, index) => (
             <Card
               key={index}
@@ -51,6 +56,8 @@ const TwitterPage = () => {
             />
           ))}
       </div>
+      }
+      
     </div>
   );
 };

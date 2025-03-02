@@ -1,4 +1,5 @@
 import Card from "../Components/Card";
+import EmptyState from "../Components/EmptyState";
 import useContents from "../hooks/useContents";
 import { useEffect, useState } from "react";
 
@@ -17,6 +18,7 @@ const YoutubePage = () => {
     const data = contents.filter((content) => content.type == "youtube");
     setYoutubeContent(data);
   };
+  console.log(youtubeContent);
 
   useEffect(() => {
     filteredYtVideos();
@@ -24,7 +26,7 @@ const YoutubePage = () => {
 
   return (
     <div className="sm:ml-64 ml-2 bg-[#eff1fe] min-h-screen w-full">
-      <p className="text-2xl m-4 text-center">
+      <p className="text-2xl m-4 text-center font-medium my-4">
         The vault of your favorite YouTube moments.🎥
       </p>
       {isError && (
@@ -39,8 +41,13 @@ const YoutubePage = () => {
           </p>
         </div>
       )}
-      <div className="gap-1 sm:mt-4 sm:m-20   grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4">
-        {youtubeContent &&
+
+      {youtubeContent.length==0 ? <div className="flex justify-center my-10">
+
+        <EmptyState subHeading="No Videos links Yet!" message="Start adding videos from the Home page—your saved YouTube links will appear here!"/>
+      </div> : 
+        <div className="gap-1 sm:mt-4 sm:m-20   grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4">
+        {
           youtubeContent.map((content, index) => (
             <Card
               key={index}
@@ -52,6 +59,8 @@ const YoutubePage = () => {
             />
           ))}
       </div>
+      }
+      
     </div>
   );
 };

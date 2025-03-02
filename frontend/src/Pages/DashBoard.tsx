@@ -7,6 +7,7 @@ import ContentModal from "../Components/ContentModal";
 import { useState } from "react";
 import useContents from "../hooks/useContents"; 
 import ShareModal from "../Components/ShareModal";
+import  EmptyState from "../Components/EmptyState";
 
 function DashBoard() {
   const [open, setIsopen] = useState(false);
@@ -50,21 +51,29 @@ function DashBoard() {
         </div>
       )}
 
+      {contents.length==0 ? <div className="flex justify-center my-6">
+        <EmptyState
+        subHeading="Start Building Your Second Brain!"
+        message="Save and organize your favorite YouTube and X links in one place. Click 'Add Content' to get started!"
+      />
+      </div> : 
       <div className="gap-1 sm:mt-4 sm:m-10   grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4">
-        {contents &&
-          contents.map((content, index) => (
-            <Card
-            key={index}
-              id={content._id}
-              type={content.type}
-              title={content.title}
-              link={content.link}
-              reFetch={getContents}
-            />
+      {contents &&
+        contents.map((content, index) => (
+          <Card
+          key={index}
+            id={content._id}
+            type={content.type}
+            title={content.title}
+            link={content.link}
+            reFetch={getContents}
+          />
 
-          ))}
-            {/* <Card type="twitter" title="Latest-POst" link="https://x.com/Sanjana_ynvsdl/status/1888932240308019419?ref_src=twsrc%5Etfw"/> */}
-      </div>
+        ))}
+          {/* <Card type="twitter" title="Latest-POst" link="https://x.com/Sanjana_ynvsdl/status/1888932240308019419?ref_src=twsrc%5Etfw"/> */}
+    </div>
+      }
+      
     </div>
   );
 }
